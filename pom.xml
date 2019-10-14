@@ -1,0 +1,208 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.dragonli.service</groupId>
+	<artifactId>parent</artifactId>
+	<version>1.0</version>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.1.0.RELEASE</version>
+	</parent>
+
+	<scm>
+		<connection>scm:git:git@localhost</connection>
+	</scm>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<project.version>1.0</project.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<java.version>1.8</java.version>
+		<bitcoinj.version>0.14.5</bitcoinj.version>
+		<bouncycastle.version>1.55</bouncycastle.version>
+		<ethereumj.version>1.6.3-RELEASE</ethereumj.version>
+		<javamail.version>1.4.3</javamail.version>
+		<lesscss.version>1.7.0.1.1</lesscss.version>
+		<pebble.version>2.4.0</pebble.version>
+		<redisson.version>3.5.7</redisson.version>
+		<rocketmq.version>4.2.0</rocketmq.version>
+		<spotify.docker.version>1.0.0</spotify.docker.version>
+		<swagger2.version>2.7.0</swagger2.version>
+		<mysql.version>5.1.44</mysql.version>
+		<skipTests>true</skipTests>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>Finchley.SR2</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+		    <groupId>com.alibaba</groupId>
+		    <artifactId>fastjson</artifactId>
+		    <version>1.2.51</version>
+		</dependency>
+	</dependencies>
+
+	<distributionManagement>
+       	<repository>
+			<id>maven-releases</id>
+			<url>http://192.168.7.125:8081/repository/maven-releases/</url>
+       	</repository>
+	</distributionManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<!-- create jar -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<executions>
+						<execution>
+							<goals>
+								<goal>test-jar</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<archive>
+							<manifest>
+								<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							</manifest>
+							<manifestEntries>
+								<Implementation-Version>${project.version}-${buildNumber}-${maven.build.timestamp}</Implementation-Version>
+							</manifestEntries>
+						</archive>
+					</configuration>
+				</plugin>
+
+				<!-- create SpringBoot executable application jar -->
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+					<configuration>
+						<!-- exclude devtools -->
+						<excludeDevtools>true</excludeDevtools>
+					</configuration>
+				</plugin>
+
+				<!-- create git revision -->
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>buildnumber-maven-plugin</artifactId>
+					<version>1.4</version>
+					<executions>
+						<execution>
+							<phase>validate</phase>
+							<goals>
+								<goal>create</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<configuration>
+							<shortRevisionLength>7</shortRevisionLength>
+						</configuration>
+						<doCheck>false</doCheck>
+						<doUpdate>false</doUpdate>
+					</configuration>
+				</plugin>
+
+				<!-- create Docker image
+				<plugin>
+					<groupId>com.spotify</groupId>
+					<artifactId>docker-maven-plugin</artifactId>
+					<version>${spotify.docker.version}</version>
+					<configuration>
+						<imageName>crypto-${project.artifactId}</imageName>
+						<imageTags>
+							<imageTag>${project.version}</imageTag>
+						</imageTags>
+						<!  directory contains Dockerfile >
+						<dockerDirectory>../parent/docker</dockerDirectory>
+						<resources>
+							<resource>
+								<targetPath>/</targetPath>
+								<directory>${project.build.directory}</directory>
+								<include>${project.build.finalName}.jar</include>
+							</resource>
+						</resources>
+						<!  argument 'jarfile' required by Dockerfile  >
+						<buildArgs>
+							<jarfile>${project.build.finalName}.jar</jarfile>
+						</buildArgs>
+					</configuration>
+				</plugin>
+				-->
+				<!-- generate css by less -->
+				<plugin>
+					<groupId>org.lesscss</groupId>
+					<artifactId>lesscss-maven-plugin</artifactId>
+					<version>${lesscss.version}</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>compile</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<compilerArgs>
+						<arg>-parameters</arg>
+						<arg>-Xlint:all</arg>
+					</compilerArgs>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
