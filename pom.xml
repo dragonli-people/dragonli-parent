@@ -22,8 +22,8 @@
 	</licenses>
 	<developers>
 		<developer>
-			<name>ruifanli</name>
-			<email>315920958@qq.com</email>
+			<name>dragonli studio team</name>
+			<email>dragonlistuudio@gmail.com</email>
 		</developer>
 	</developers>
 	<scm>
@@ -219,7 +219,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
