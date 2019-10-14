@@ -12,8 +12,24 @@
 		<version>2.1.0.RELEASE</version>
 	</parent>
 
+	<description>SDK of chainxgame.com platform for partners to manage their own sub-account system</description>
+	<url>http://www.dragonli.org/</url>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<name>ruifanli</name>
+			<email>315920958@qq.com</email>
+		</developer>
+	</developers>
 	<scm>
-		<connection>scm:git:git@localhost</connection>
+		<connection>scm:git:git@github.com:dragonli-people/dragonli-parent.git</connection>
+		<developerConnection>scm:git:git@github.com:dragonli-people/dragonli-parent.git</developerConnection>
+		<url>git@github.com:dragonli-people/dragonli-parent.git</url>
 	</scm>
 
 	<properties>
@@ -69,10 +85,14 @@
 	</dependencies>
 
 	<distributionManagement>
-       	<repository>
-			<id>maven-releases</id>
-			<url>http://192.168.7.125:8081/repository/maven-releases/</url>
-       	</repository>
+		<snapshotRepository>
+			<id>sonatype1</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+		</snapshotRepository>
+		<repository>
+			<id>sonatype1</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
 	</distributionManagement>
 
 	<build>
@@ -188,6 +208,47 @@
 			</plugin>
 
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!--
+			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>buildnumber-maven-plugin</artifactId>
 			</plugin>
@@ -203,6 +264,7 @@
 					</execution>
 				</executions>
 			</plugin>
+			-->
 		</plugins>
 	</build>
 </project>
