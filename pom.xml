@@ -181,38 +181,17 @@
 	</distributionManagement>
 
 	<build>
-		<pluginManagement>
-			<plugins>
-
-
-				<!-- create SpringBoot executable application jar -->
-				<plugin>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-maven-plugin</artifactId>
-					<configuration>
-						<!-- exclude devtools -->
-						<excludeDevtools>true</excludeDevtools>
-					</configuration>
-				</plugin>
-
-
-				<!-- generate css by less -->
-				<plugin>
-					<groupId>org.lesscss</groupId>
-					<artifactId>lesscss-maven-plugin</artifactId>
-					<version>${lesscss.version}</version>
-					<executions>
-						<execution>
-							<goals>
-								<goal>compile</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-
+		
 		<plugins>
+			<plugin>
+							<groupId>org.springframework.boot</groupId>
+							<artifactId>spring-boot-maven-plugin</artifactId>
+							<configuration>
+								<!-- exclude devtools -->
+								<excludeDevtools>true</excludeDevtools>
+							</configuration>
+						</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
