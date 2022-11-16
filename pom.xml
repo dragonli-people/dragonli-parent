@@ -73,7 +73,7 @@
 		<spotify.docker.version>1.0.0</spotify.docker.version>
 		<swagger2.version>2.7.0</swagger2.version>
 		<mysql.version>5.1.44</mysql.version>
-		<fasterxml.version>2.9.10</fasterxml.version>
+		<fasterxml.version>2.12.7.1</fasterxml.version>
 		<skipTests>true</skipTests>
 	</properties>
 
